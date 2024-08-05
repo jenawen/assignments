@@ -1,0 +1,30 @@
+def assignments():
+    testData = {
+        'REQ_ID': ["test1"],
+        'ACCOUNT_NUMBER': ["test2"],
+        'RESERVATION_NUMBER': ["test3"],
+        'REQUEST_DATE': ['test4'],
+        'REQUESTED_BY': ['test5'],
+        'REQUESTTYPE_NAME': ['test6'],
+        'STATUS_DESC': ['test7'],
+        'STATUS_DATE': ['test8'],
+        'FOLLOWUP_DATE': ['test9'],
+        'LOCKED_BY': ['test10'],
+        'LOCKED_TIME': ['test11'],
+        'ASSIGNED_TEAM': ['test12'],
+        'ASSIGNED_PERSON': ['test13'],
+        'ALERT': ['test14'],
+    }
+    df = pd.DataFrame(testData)
+    
+    df = df.drop(columns=['ACCOUNT_NUMBER', 'RESERVATION_NUMBER'])
+    newCol = ['newCol']
+    df.insert(loc=2, column='TIME', value=newCol)
+    df = df.rename(columns={'REQUEST_DATE': 'DATE'})
+    
+    
+    
+    
+    print(df)
+    
+assignments()
