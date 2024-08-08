@@ -2,25 +2,25 @@ import pandas as pd
 
 def assignments():
     testData = {
-        'REQ_ID': ["test1","test1","test1"],
-        'ACCOUNT_NUMBER': ["test2","test2","test2"],
-        'RESERVATION_NUMBER': ["test3","test3","test3"],
-        'REQUEST_DATE': ['test4','test4','test4'],
-        'REQUESTED_BY': ['test5','test5','test5'],
-        'REQUESTTYPE_NAME': ['Call Back Referral', "Rush Plastic", "Fee Adjustment"],
-        'STATUS_DESC': ['test7','test7','test7'],
-        'STATUS_DATE': ['test8','test8','test8'],
-        'FOLLOWUP_DATE': ['test9','test9','test9'],
-        'LOCKED_BY': ['test10','test10','test10'],
-        'LOCKED_TIME': ['test11','test11','test11'],
-        'ASSIGNED_TEAM': ['test12','test12','test12'],
-        'ASSIGNED_PERSON': ['apple','banana','carrot'],
-        'ALERT': ['test14','test14','test14'],
+        'REQ_ID': ["test1","test1","test1","test1","test1"],
+        'ACCOUNT_NUMBER': ["test2","test2","test2","test2","test2"],
+        'RESERVATION_NUMBER': ["test3","test3","test3","test3","test3"],
+        'REQUEST_DATE': ['test4','test4','test4','test4','test4'],
+        'REQUESTED_BY': ['test5','test5','test5','test5','test5'],
+        'REQUESTTYPE_NAME': ["Rush Plastic",'Personal','Call Back Referral', "Rush Plastic", "Fee Adjustment"],
+        'STATUS_DESC': ['test7','test7','test7','test7','test7'],
+        'STATUS_DATE': ['test8','test8','test8','test8','test8'],
+        'FOLLOWUP_DATE': ['test9','test9','test9','test9','test9'],
+        'LOCKED_BY': ['test10','test10','test10','test10','test10'],
+        'LOCKED_TIME': ['test11','test11','test11','test11','test11'],
+        'ASSIGNED_TEAM': ['test12','test12','test12','test12','test12'],
+        'ASSIGNED_PERSON': ['h radish','j banana','a carrot','h radish','b strawberry'],
+        'ALERT': ['test14','test14','test14','test14','test14'],
     }
     df = pd.DataFrame.from_dict(testData,)
     
     df = df.drop(columns=['ACCOUNT_NUMBER', 'RESERVATION_NUMBER'])
-    newCol = ['time 1', 'time 2', 'time 3']
+    newCol = ['time 1', 'time 2', 'time 3', 'time 4', 'time 5']
     df.insert(loc=2, column='TIME', value=newCol)
     df = df.rename(columns={'REQUEST_DATE': 'DATE'})
     
@@ -35,13 +35,22 @@ def assignments():
     # need xlsx Ageing template, idk make one or something
     # cell [1][1] == managerlist data
     # create new df from filtering by req type -> "Call Back Referral"
+    ssu = df[df['REQUESTTYPE_NAME'] == "Call Back Referral"]
+    print(ssu)
         # save df on new sheet as "SSU [ date ]"
     # create new df from og data, filter by Assigned person, everything besides Jasmine and Hyman
+    personal = df[(df['ASSIGNED_PERSON'] != "h radish") & (df['ASSIGNED_PERSON'] != "j banana")] 
     # grab date of that week's sunday, filter date by oldest ->
-    # filter by FOLLOWUP_DATE < sunday of that week -> save as new sheet "PERSONAL ORRS"
+    # filter by FOLLOWUP_DATE < sunday of that week
+        # save as new sheet "PERSONAL ORRS"
+    print(personal)
     
     # create new df from og data, filter by Assigned person, only Hyman
+    worklist = df[(df['ASSIGNED_PERSON'] == "h radish") & (df['REQUESTTYPE_NAME'] != "Call Back Referral")]
+    print(worklist)
     # total_orrs = number of rows - 1 
+    total_orrs = worklist.shape[0]
+    print(total_orrs)
     # num_ppl = who is present for that sunday
     # orrs_per_person = total_orrs / num_ppl
         #! FOR UNEVEN NUMS -> NEED ALGORITHM THAT DISTRIBUTES LEFTOVER ORRS, possibly use mod %
@@ -53,6 +62,5 @@ def assignments():
     
     
     
-    print(df)
     
 assignments()
